@@ -54,6 +54,9 @@ public class SimpleGame : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
+
+        // Exercise:
+        //  add code so that the rectangle does not draw if _isVisible == false
         _spriteBatch.Begin();
 
         Rectangle rect = new Rectangle(_xPosition, _yPosition, _width, _height);
