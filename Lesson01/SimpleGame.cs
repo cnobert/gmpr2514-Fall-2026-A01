@@ -11,6 +11,8 @@ public class SimpleGame : Game
 
     private Vector2 _position, _dimensions;
 
+    private float _speed;
+
     private Color _rectangleColour;
     private bool _isVisible;
 
@@ -25,6 +27,8 @@ public class SimpleGame : Game
     {
         _position = new Vector2(100, 150);
         _dimensions = new Vector2(300, 200);
+
+        _speed = 150;
 
         _rectangleColour = Color.DarkGoldenrod;
         _isVisible = true;
@@ -43,6 +47,11 @@ public class SimpleGame : Game
 
     protected override void Update(GameTime gameTime)
     {
+        // TotalSeconds is the amount of time that has passed since the last
+        // call to Update (roughly 0.16 seconds if there has been no lag)
+        float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
+
+        _position.X += _speed * deltaTime; // same as typing "_position.X = _position.X + _speed"
 
         base.Update(gameTime);
     }
@@ -50,7 +59,6 @@ public class SimpleGame : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
 
         // Exercise:
         //  add code so that the rectangle does not draw if _isVisible == false
