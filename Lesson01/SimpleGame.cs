@@ -9,9 +9,11 @@ public class SimpleGame : Game
     private SpriteBatch _spriteBatch;
     private Texture2D _pixel;
 
+    private int _screenWidth, _screenHeight;
+
     private Vector2 _position, _dimensions;
 
-    private float _speed;
+    private float _speedX, _speedSlow;
 
     private Color _rectangleColour;
     private bool _isVisible;
@@ -25,11 +27,15 @@ public class SimpleGame : Game
 
     protected override void Initialize()
     {
+        _screenWidth = _graphics.GraphicsDevice.Viewport.Width;
+        _screenHeight = _graphics.GraphicsDevice.Viewport.Height;
+
         _position = new Vector2(100, 150);
         _dimensions = new Vector2(300, 200);
 
-        _speed = 150;
-
+        _speedX = 150;    // the "f" tells C# to consider this literal a float
+                            // rather than a double
+        _speedSlow = 15;
         _rectangleColour = Color.DarkGoldenrod;
         _isVisible = true;
 
@@ -51,7 +57,15 @@ public class SimpleGame : Game
         // call to Update (roughly 0.16 seconds if there has been no lag)
         float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
-        _position.X += _speed * deltaTime; // same as typing "_position.X = _position.X + _speed"
+        // same as typing "_position.X = _position.X + _speed"
+        
+        _position.X += _speedX * deltaTime;
+
+        if(_position.X + _dimensions.X > _screenWidth)
+        {
+            _speedX *= -1;
+        }
+
 
         base.Update(gameTime);
     }
