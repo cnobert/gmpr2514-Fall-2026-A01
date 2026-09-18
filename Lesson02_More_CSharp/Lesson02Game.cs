@@ -55,7 +55,10 @@ public class Lesson02Game : Game
 
         for(int i = 0; i < _count; i++)
         {
-            
+            float x = _position.X + i * (_dimensions.X + _spacing);
+            Rectangle r = 
+                new Rectangle((int)x, (int)_position.Y, (int)_dimensions.X, (int)_dimensions.Y);
+            _spriteBatch.Draw(_pixel, r, Color.LightYellow);
         }
 
         _spriteBatch.End();
