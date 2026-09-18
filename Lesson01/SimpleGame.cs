@@ -13,7 +13,7 @@ public class SimpleGame : Game
 
     private Vector2 _position, _dimensions;
 
-    private float _speedX, _speedSlow;
+    private float _speedX, _speedY;
 
     private Color _rectangleColour;
     private bool _isVisible;
@@ -33,9 +33,9 @@ public class SimpleGame : Game
         _position = new Vector2(100, 150);
         _dimensions = new Vector2(300, 200);
 
-        _speedX = 150;    // the "f" tells C# to consider this literal a float
-                            // rather than a double
-        _speedSlow = 15;
+        _speedX = 150;    // the "f" tells C# to consider this literal a float rather than a double
+        _speedY = 100;
+
         _rectangleColour = Color.DarkGoldenrod;
         _isVisible = true;
 
@@ -60,12 +60,19 @@ public class SimpleGame : Game
         // same as typing "_position.X = _position.X + _speed"
         
         _position.X += _speedX * deltaTime;
+        _position.Y += _speedY * deltaTime;
 
-        if(_position.X + _dimensions.X > _screenWidth)
+        // in C#, the "and" operator is "&&"
+        // the "or" operator is "||"
+        if(_position.X < 0 || _position.X + _dimensions.X > _screenWidth)
         {
             _speedX *= -1;
         }
 
+        // IF there is only one line of code after the "if" statement, the braces
+        // are not necessary
+        if(_position.Y < 0 || _position.Y + _dimensions.Y > _screenHeight)
+            _speedY *= -1;
 
         base.Update(gameTime);
     }

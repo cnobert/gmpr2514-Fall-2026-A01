@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson01", "Lesson01\Lesson01.csproj", "{1C1D645D-A7B0-4F2E-A93D-89EA06F27E4B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lesson02_More_CSharp", "Lesson02_More_CSharp", "{2922B1F1-3480-2EDC-0849-F76FFF7E63FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson02_MoreCSharp", "Lesson02_More_CSharp\Lesson02_MoreCSharp.csproj", "{B359B71D-8342-4F83-8CCD-B96B0292F33C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +31,23 @@ Global
 		{1C1D645D-A7B0-4F2E-A93D-89EA06F27E4B}.Release|x64.Build.0 = Release|Any CPU
 		{1C1D645D-A7B0-4F2E-A93D-89EA06F27E4B}.Release|x86.ActiveCfg = Release|Any CPU
 		{1C1D645D-A7B0-4F2E-A93D-89EA06F27E4B}.Release|x86.Build.0 = Release|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Debug|x64.Build.0 = Debug|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Debug|x86.Build.0 = Debug|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|x64.ActiveCfg = Release|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|x64.Build.0 = Release|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|x86.ActiveCfg = Release|Any CPU
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B359B71D-8342-4F83-8CCD-B96B0292F33C} = {2922B1F1-3480-2EDC-0849-F76FFF7E63FA}
 	EndGlobalSection
 EndGlobal
