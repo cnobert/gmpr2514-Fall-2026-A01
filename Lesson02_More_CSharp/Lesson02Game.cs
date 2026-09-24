@@ -53,7 +53,7 @@ public class Lesson02Game : Game
 
         _spriteBatch.Begin();
 
-        for(int i = 0; i < _count; i++)
+        for(int i = 0; i <_count; i++)
         {
             float x = _position.X + i * (_dimensions.X + _spacing);
             Rectangle r = 

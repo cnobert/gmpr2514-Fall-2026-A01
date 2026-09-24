@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lesson02_More_CSharp", "Les
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson02_MoreCSharp", "Lesson02_More_CSharp\Lesson02_MoreCSharp.csproj", "{B359B71D-8342-4F83-8CCD-B96B0292F33C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_Content", "Lesson03_Content\Lesson03_Content.csproj", "{011B8022-284F-4EE5-A370-7B65D8126CFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,18 @@ Global
 		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|x64.Build.0 = Release|Any CPU
 		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|x86.ActiveCfg = Release|Any CPU
 		{B359B71D-8342-4F83-8CCD-B96B0292F33C}.Release|x86.Build.0 = Release|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Debug|x64.Build.0 = Debug|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Debug|x86.Build.0 = Debug|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Release|x64.ActiveCfg = Release|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Release|x64.Build.0 = Release|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Release|x86.ActiveCfg = Release|Any CPU
+		{011B8022-284F-4EE5-A370-7B65D8126CFF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
