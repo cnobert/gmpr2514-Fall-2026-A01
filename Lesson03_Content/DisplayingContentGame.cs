@@ -40,7 +40,7 @@ public class DisplayingContentGame : Game
 
         Texture2D walking = Content.Load<Texture2D>("Walking");
         //                           (Texture2D, width, height, number of frames, frame per second)
-        _walkingAnimation = new SimpleAnimation(walking, 81, 144, 8, 8);
+        _walkingAnimation = new SimpleAnimation(walking, 81, 144, 8, 9);
     }
     protected override void Update(GameTime gameTime)
     {
@@ -53,10 +53,12 @@ public class DisplayingContentGame : Game
 
         _spriteBatch.Begin();
 
-        _spriteBatch.Draw(_spaceStation, Vector2.Zero, Color.White);
+        
         _spriteBatch.Draw(_ship, new Vector2(300, 140), Color.White);
+        _spriteBatch.Draw(_spaceStation, Vector2.Zero, Color.White);
         _spriteBatch.DrawString(_arial, _output, new Vector2(20, 20), Color.White);
         _walkingAnimation.Draw(_spriteBatch, new Vector2(100, 200), SpriteEffects.None);
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);
