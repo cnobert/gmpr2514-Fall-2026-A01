@@ -13,7 +13,18 @@ public class Pong : Game
 
     private Texture2D _backgroundTexture, _ballTexture;
     private Vector2 _ballPosition, _ballVelocity; // velocity = speed * direction
-    private Rectangle _playAreaBoundingBox;
+
+    private Rectangle PlayAreaBoundingBox
+    {
+        get 
+        {
+            return new Rectangle(
+                0, 
+                _PlayAreaEdgeLineWidth, 
+                _WindowWidth, 
+                _WindowHeight - (_PlayAreaEdgeLineWidth * 2));
+        }
+    }
 
     public Pong()
     {
@@ -30,8 +41,6 @@ public class Pong : Game
 
         _ballPosition = new Vector2(150, 195);
         _ballVelocity = new Vector2(-60, -60); //up and to the left
-
-        _playAreaBoundingBox = new Rectangle(0, 0, _WindowWidth, _WindowHeight);
 
         base.Initialize();
     }
@@ -50,10 +59,16 @@ public class Pong : Game
 
         _ballPosition += _ballVelocity * dt;
 
-        if(_ballPosition.X <= _playAreaBoundingBox.Left ||
-            (_ballPosition.X + _BallWidthAndHeight) >= _playAreaBoundingBox.Right)
+        if(_ballPosition.X <= PlayAreaBoundingBox.Left ||
+            (_ballPosition.X + _BallWidthAndHeight) >= PlayAreaBoundingBox.Right)
         {
             _ballVelocity.X *= -1;
+        }
+
+        if(_ballPosition.Y <= PlayAreaBoundingBox.Top ||
+            (_ballPosition.Y + _BallWidthAndHeight) >= PlayAreaBoundingBox.Bottom)
+        {
+            _ballVelocity.Y *= -1;
         }
 
         base.Update(gameTime);
