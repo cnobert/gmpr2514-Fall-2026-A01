@@ -88,10 +88,33 @@ public class Pong : Game
         KeyboardState kbState = Keyboard.GetState();
         if(kbState.IsKeyDown(Keys.Up))
             _paddleVelocity = new Vector2(0, -_PaddleSpeed);
+        else if(kbState.IsKeyDown(Keys.Down))
+            _paddleVelocity = new Vector2(0, _PaddleSpeed);
+        else
+            _paddleVelocity = Vector2.Zero;
 
         _paddlePosition += _paddleVelocity * dt;
 
+        if(_paddlePosition.Y <= PlayAreaBoundingBox.Top)
+            _paddlePosition.Y = PlayAreaBoundingBox.Top;
+        else if(_paddlePosition.Y + _PaddleHeight >= PlayAreaBoundingBox.Bottom)
+            _paddlePosition.Y = PlayAreaBoundingBox.Bottom - _PaddleHeight;
 
+        #endregion
+
+        #region paddle - alternative solution fewer lines of code
+        // KeyboardState kbState = Keyboard.GetState();
+       
+        // if(kbState.IsKeyDown(Keys.Up) && _paddlePosition.Y >= PlayAreaBoundingBox.Top)
+        //     _paddleVelocity = new Vector2(0, -_PaddleSpeed);
+       
+        // else if(kbState.IsKeyDown(Keys.Down) && (_paddlePosition.Y + _PaddleHeight) <= PlayAreaBoundingBox.Bottom)
+        //     _paddleVelocity = new Vector2(0, _PaddleSpeed);
+        // else
+        //     _paddleVelocity = Vector2.Zero;
+ 
+        // _paddlePosition += _paddleVelocity * dt;
+ 
         #endregion
         base.Update(gameTime);
     }
