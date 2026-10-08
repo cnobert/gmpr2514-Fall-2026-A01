@@ -7,12 +7,19 @@ namespace Lesson05_Pong;
 public class Pong : Game
 {
     private const int _WindowWidth = 750, _WindowHeight = 450, _BallWidthAndHeight = 21, _PlayAreaEdgeLineWidth = 12;
+    private const int _PaddleWidth = 6 * 2, _PaddleHeight = 54 * 2;
+    private const float _PaddleSpeed = 240;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private Texture2D _backgroundTexture, _ballTexture;
+    private Texture2D _backgroundTexture;
+    
+    private Texture2D _ballTexture;
     private Vector2 _ballPosition, _ballVelocity; // velocity = speed * direction
+
+    private Texture2D _paddleTexture;
+    private Vector2 _paddlePosition, _paddleVelocity;
 
     private Rectangle PlayAreaBoundingBox
     {
@@ -40,7 +47,9 @@ public class Pong : Game
         _graphics.ApplyChanges();
 
         _ballPosition = new Vector2(150, 195);
-        _ballVelocity = new Vector2(-60, -60); //up and to the left
+        _ballVelocity = new Vector2(-160, -160); //up and to the left
+
+        _paddlePosition = new Vector2(690, 198);
 
         base.Initialize();
     }
@@ -50,6 +59,7 @@ public class Pong : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _backgroundTexture = Content.Load<Texture2D>("Court");
         _ballTexture = Content.Load<Texture2D>("Ball");
+        _paddleTexture = Content.Load<Texture2D>("Paddle");
 
     }
 
@@ -57,20 +67,32 @@ public class Pong : Game
     {
         float dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
+        #region ball
         _ballPosition += _ballVelocity * dt;
 
+        // bounce off sides
         if(_ballPosition.X <= PlayAreaBoundingBox.Left ||
             (_ballPosition.X + _BallWidthAndHeight) >= PlayAreaBoundingBox.Right)
         {
             _ballVelocity.X *= -1;
         }
-
+        // bounce off top and bottom
         if(_ballPosition.Y <= PlayAreaBoundingBox.Top ||
             (_ballPosition.Y + _BallWidthAndHeight) >= PlayAreaBoundingBox.Bottom)
         {
             _ballVelocity.Y *= -1;
         }
+        #endregion
+        
+        #region paddle
+        KeyboardState kbState = Keyboard.GetState();
+        if(kbState.IsKeyDown(Keys.Up))
+            _paddleVelocity = new Vector2(0, -_PaddleSpeed);
 
+        _paddlePosition += _paddleVelocity * dt;
+
+
+        #endregion
         base.Update(gameTime);
     }
 
@@ -86,6 +108,11 @@ public class Pong : Game
                 (int)_ballPosition.X, (int)_ballPosition.Y, 
                 _BallWidthAndHeight, _BallWidthAndHeight);
         _spriteBatch.Draw(_ballTexture, ballRectangle, Color.White);
+
+        Rectangle paddleRectangle = new Rectangle(
+                (int)_paddlePosition.X, (int)_paddlePosition.Y,
+                _PaddleWidth, _PaddleHeight);
+        _spriteBatch.Draw(_paddleTexture, paddleRectangle, Color.White);             
         _spriteBatch.End();
 
         base.Draw(gameTime);
