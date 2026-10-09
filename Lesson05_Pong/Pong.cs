@@ -95,6 +95,7 @@ public class Pong : Game
 
         _paddlePosition += _paddleVelocity * dt;
 
+        // pin the paddle at the to or bottom if it has bled over
         if(_paddlePosition.Y <= PlayAreaBoundingBox.Top)
             _paddlePosition.Y = PlayAreaBoundingBox.Top;
         else if(_paddlePosition.Y + _PaddleHeight >= PlayAreaBoundingBox.Bottom)
@@ -102,9 +103,10 @@ public class Pong : Game
 
         #endregion
 
-        #region paddle - alternative solution fewer lines of code
+        #region paddle - commented out alternative solution - fewer lines of code
         // KeyboardState kbState = Keyboard.GetState();
        
+       // 
         // if(kbState.IsKeyDown(Keys.Up) && _paddlePosition.Y >= PlayAreaBoundingBox.Top)
         //     _paddleVelocity = new Vector2(0, -_PaddleSpeed);
        
@@ -116,6 +118,20 @@ public class Pong : Game
         // _paddlePosition += _paddleVelocity * dt;
  
         #endregion
+        
+        Rectangle ballBoundingBox = new Rectangle(
+                (int)_ballPosition.X, (int)_ballPosition.Y, 
+                _BallWidthAndHeight, _BallWidthAndHeight);
+
+        Rectangle paddleBoundingBox = new Rectangle(
+                (int)_paddlePosition.X, (int)_paddlePosition.Y,
+                _PaddleWidth, _PaddleHeight);
+
+        bool colliding = ballBoundingBox.Intersects(paddleBoundingBox);
+
+        if(colliding)
+            _ballVelocity.X *= -1;
+
         base.Update(gameTime);
     }
 
