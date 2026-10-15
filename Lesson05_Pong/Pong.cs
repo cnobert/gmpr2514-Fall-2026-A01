@@ -6,7 +6,7 @@ namespace Lesson05_Pong;
 
 public class Pong : Game
 {
-    private const int _WindowWidth = 750, _WindowHeight = 450, _BallWidthAndHeight = 21, _PlayAreaEdgeLineWidth = 12;
+    private const int _WindowWidth = 750, _WindowHeight = 450, _PlayAreaEdgeLineWidth = 12;
     private const int _PaddleWidth = 6 * 2, _PaddleHeight = 54 * 2;
     private const float _PaddleSpeed = 240;
 
@@ -14,13 +14,11 @@ public class Pong : Game
     private SpriteBatch _spriteBatch;
 
     private Texture2D _backgroundTexture;
-    
-    private Texture2D _ballTexture;
-    private Vector2 _ballPosition, _ballVelocity; // velocity = speed * direction
 
     private Texture2D _paddleTexture;
     private Vector2 _paddlePosition, _paddleVelocity;
 
+    private Ball _ball;
 
     private Rectangle PlayAreaBoundingBox
     {
@@ -47,8 +45,7 @@ public class Pong : Game
         _graphics.PreferredBackBufferHeight = _WindowHeight;
         _graphics.ApplyChanges();
 
-        _ballPosition = new Vector2(150, 195);
-        _ballVelocity = new Vector2(-160, -160); //up and to the left
+        _ball.Initialize(PlayAreaBoundingBox);
 
         _paddlePosition = new Vector2(690, 198);
 
@@ -59,7 +56,9 @@ public class Pong : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _backgroundTexture = Content.Load<Texture2D>("Court");
-        _ballTexture = Content.Load<Texture2D>("Ball");
+        
+        _ball.LoadContent(Content);
+        
         _paddleTexture = Content.Load<Texture2D>("Paddle");
 
     }
@@ -68,22 +67,7 @@ public class Pong : Game
     {
         float dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
-        #region ball
-        _ballPosition += _ballVelocity * dt;
-
-        // bounce off sides
-        if(_ballPosition.X <= PlayAreaBoundingBox.Left ||
-            (_ballPosition.X + _BallWidthAndHeight) >= PlayAreaBoundingBox.Right)
-        {
-            _ballVelocity.X *= -1;
-        }
-        // bounce off top and bottom
-        if(_ballPosition.Y <= PlayAreaBoundingBox.Top ||
-            (_ballPosition.Y + _BallWidthAndHeight) >= PlayAreaBoundingBox.Bottom)
-        {
-            _ballVelocity.Y *= -1;
-        }
-        #endregion
+        _ball.Update(gameTime);
         
         #region paddle
         KeyboardState kbState = Keyboard.GetState();
@@ -120,18 +104,18 @@ public class Pong : Game
  
         #endregion
         
-        Rectangle ballBoundingBox = new Rectangle(
-                (int)_ballPosition.X, (int)_ballPosition.Y, 
-                _BallWidthAndHeight, _BallWidthAndHeight);
+        // Rectangle ballBoundingBox = new Rectangle(
+        //         (int)_ballPosition.X, (int)_ballPosition.Y, 
+        //         _BallWidthAndHeight, _BallWidthAndHeight);
 
-        Rectangle paddleBoundingBox = new Rectangle(
-                (int)_paddlePosition.X, (int)_paddlePosition.Y,
-                _PaddleWidth, _PaddleHeight);
+        // Rectangle paddleBoundingBox = new Rectangle(
+        //         (int)_paddlePosition.X, (int)_paddlePosition.Y,
+        //         _PaddleWidth, _PaddleHeight);
 
-        bool colliding = ballBoundingBox.Intersects(paddleBoundingBox);
+        // bool colliding = ballBoundingBox.Intersects(paddleBoundingBox);
 
-        if(colliding)
-            _ballVelocity.X *= -1;
+        // if(colliding)
+        //     _ballVelocity.X *= -1;
 
         base.Update(gameTime);
     }
