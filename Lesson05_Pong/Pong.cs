@@ -21,6 +21,7 @@ public class Pong : Game
     private Texture2D _paddleTexture;
     private Vector2 _paddlePosition, _paddleVelocity;
 
+
     private Rectangle PlayAreaBoundingBox
     {
         get 
