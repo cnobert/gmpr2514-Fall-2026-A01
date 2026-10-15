@@ -45,6 +45,7 @@ public class Pong : Game
         _graphics.PreferredBackBufferHeight = _WindowHeight;
         _graphics.ApplyChanges();
 
+        _ball = new Ball();
         _ball.Initialize(PlayAreaBoundingBox);
 
         _paddlePosition = new Vector2(690, 198);
@@ -125,14 +126,11 @@ public class Pong : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-
         _spriteBatch.Draw(_backgroundTexture, new Rectangle(0, 0, _WindowWidth, _WindowHeight), Color.White);
         
-        Rectangle ballRectangle = new Rectangle(
-                (int)_ballPosition.X, (int)_ballPosition.Y, 
-                _BallWidthAndHeight, _BallWidthAndHeight);
-        _spriteBatch.Draw(_ballTexture, ballRectangle, Color.White);
+        _ball.Draw(_spriteBatch);
 
+        
         Rectangle paddleRectangle = new Rectangle(
                 (int)_paddlePosition.X, (int)_paddlePosition.Y,
                 _PaddleWidth, _PaddleHeight);

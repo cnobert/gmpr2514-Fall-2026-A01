@@ -40,5 +40,12 @@ public class Ball
         }
     }
 
+    internal void Draw(SpriteBatch spriteBatch)
+    {
+        Rectangle ballRectangle = new Rectangle(
+                (int)_position.X, (int)_position.Y, 
+                _WidthAndHeight, _WidthAndHeight);
+        spriteBatch.Draw(_texture, ballRectangle, Color.White);
 
+    }
 }
