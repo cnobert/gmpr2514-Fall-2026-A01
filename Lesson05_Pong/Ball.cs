@@ -6,11 +6,19 @@ namespace Lesson05_Pong;
 
 public class Ball
 {
-    private const int _WidthAndHeight = 21;
+    private const int _WidthAndHeight = 21, _CollisionTimerIntervalMillis = 400;
 
     private Texture2D _texture;
     private Vector2 _position, _velocity; // velocity = speed * direction
     private Rectangle _playAreaBoundingBox;
+
+    private int _collisionTimerMillis;
+
+    internal Rectangle BoundingBox
+    {
+        get { return new Rectangle((int)_position.X, (int)_position.Y, _WidthAndHeight, _WidthAndHeight);}
+    }
+
     internal void Initialize(Rectangle playAreaBoundingBox)
     {
         _playAreaBoundingBox = playAreaBoundingBox;
@@ -23,6 +31,8 @@ public class Ball
     }
     internal void Update(GameTime gameTime)
     {
+        _collisionTimerMillis += gameTime.ElapsedGameTime.Milliseconds;
+
         float dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
         _position += _velocity * dt;
 
@@ -39,7 +49,6 @@ public class Ball
             _velocity.Y *= -1;
         }
     }
-
     internal void Draw(SpriteBatch spriteBatch)
     {
         Rectangle ballRectangle = new Rectangle(
@@ -47,5 +56,29 @@ public class Ball
                 _WidthAndHeight, _WidthAndHeight);
         spriteBatch.Draw(_texture, ballRectangle, Color.White);
 
+    }
+
+    internal bool ProcessCollision(Rectangle otherBoundingBox)
+    {
+        bool didCollide = false;
+
+        if(_collisionTimerMillis >= _CollisionTimerIntervalMillis &&
+            BoundingBox.Intersects(otherBoundingBox))
+        {
+            _collisionTimerMillis = 0;
+            // collision!
+            didCollide = true;
+            // intersection represents the rectangle created by the overlapping two rectangles
+            Rectangle intersection = Rectangle.Intersect(BoundingBox, otherBoundingBox);
+            if(intersection.Width > intersection.Height)
+                // horizontal rectangle, so it's a top or bottom collision
+                _velocity.Y *= -1;
+            else
+                //vertical rectangle, so it's a side collision
+                _velocity.X *= -1;
+
+        }
+
+        return didCollide;
     }
 }

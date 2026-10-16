@@ -64,9 +64,13 @@ public class Pong : Game
         float dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
         _ball.Update(gameTime);
-        
-        
+        _paddleRight.Update(gameTime);
 
+        if(_ball.ProcessCollision(_paddleRight.BoundingBox))
+        {
+            ;
+        }
+        #region keyboard input
         KeyboardState kbState = Keyboard.GetState();
         if(kbState.IsKeyDown(Keys.Up))
             _paddleRight.Direction = new Vector2(0, -1);
@@ -74,36 +78,7 @@ public class Pong : Game
             _paddleRight.Direction = new Vector2(0, 1);
         else
             _paddleRight.Direction = Vector2.Zero;
-        _paddleRight.Update(gameTime);
-
-        #region paddle - commented out alternative solution - fewer lines of code
-        // KeyboardState kbState = Keyboard.GetState();
-       
-       // 
-        // if(kbState.IsKeyDown(Keys.Up) && _paddlePosition.Y >= PlayAreaBoundingBox.Top)
-        //     _paddleVelocity = new Vector2(0, -_PaddleSpeed);
-       
-        // else if(kbState.IsKeyDown(Keys.Down) && (_paddlePosition.Y + _PaddleHeight) <= PlayAreaBoundingBox.Bottom)
-        //     _paddleVelocity = new Vector2(0, _PaddleSpeed);
-        // else
-        //     _paddleVelocity = Vector2.Zero;
- 
-        // _paddlePosition += _paddleVelocity * dt;
- 
         #endregion
-        
-        // Rectangle ballBoundingBox = new Rectangle(
-        //         (int)_ballPosition.X, (int)_ballPosition.Y, 
-        //         _BallWidthAndHeight, _BallWidthAndHeight);
-
-        // Rectangle paddleBoundingBox = new Rectangle(
-        //         (int)_paddlePosition.X, (int)_paddlePosition.Y,
-        //         _PaddleWidth, _PaddleHeight);
-
-        // bool colliding = ballBoundingBox.Intersects(paddleBoundingBox);
-
-        // if(colliding)
-        //     _ballVelocity.X *= -1;
 
         base.Update(gameTime);
     }

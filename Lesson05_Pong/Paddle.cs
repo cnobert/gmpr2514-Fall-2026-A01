@@ -17,13 +17,20 @@ public class Paddle
     // _velocity.Length() extracts the speed from the vector
     internal Vector2 Direction
     {
-        set{ _velocity = value * _velocity.Length();}
+        set{ _velocity = value * _PaddleSpeed;}
+    }
+
+    internal Rectangle BoundingBox
+    {
+        get { return new Rectangle((int)_position.X, (int)_position.Y, _PaddleWidth, _PaddleHeight);}
     }
 
     internal void Initialize(Rectangle playAreaBoundingBox, Vector2 initialPosition)
     {
         _position = initialPosition;
         _playAreaBoundingBox = playAreaBoundingBox;
+        _velocity = new Vector2(0, _PaddleSpeed);
+
     }
     internal void LoadContent(ContentManager content)
     {
@@ -42,9 +49,6 @@ public class Paddle
     }
     internal void Draw(SpriteBatch spriteBatch)
     {
-        Rectangle paddleRectangle = new Rectangle(
-                (int)_position.X, (int)_position.Y,
-                _PaddleWidth, _PaddleHeight);
-        spriteBatch.Draw(_texture, paddleRectangle, Color.White); 
+        spriteBatch.Draw(_texture, BoundingBox, Color.White); 
     }
 }
