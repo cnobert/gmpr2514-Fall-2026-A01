@@ -7,17 +7,13 @@ namespace Lesson05_Pong;
 public class Pong : Game
 {
     private const int _WindowWidth = 750, _WindowHeight = 450, _PlayAreaEdgeLineWidth = 12;
-    private const int _PaddleWidth = 6 * 2, _PaddleHeight = 54 * 2;
-    private const float _PaddleSpeed = 240;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
     private Texture2D _backgroundTexture;
 
-    private Texture2D _paddleTexture;
-    private Vector2 _paddlePosition, _paddleVelocity;
-
+    private Paddle _paddleRight;
     private Ball _ball;
 
     private Rectangle PlayAreaBoundingBox
@@ -48,7 +44,8 @@ public class Pong : Game
         _ball = new Ball();
         _ball.Initialize(PlayAreaBoundingBox);
 
-        _paddlePosition = new Vector2(690, 198);
+        _paddleRight = new Paddle();
+        _paddleRight.Initialize(PlayAreaBoundingBox, new Vector2(690, 198));
 
         base.Initialize();
     }
@@ -59,9 +56,7 @@ public class Pong : Game
         _backgroundTexture = Content.Load<Texture2D>("Court");
         
         _ball.LoadContent(Content);
-        
-        _paddleTexture = Content.Load<Texture2D>("Paddle");
-
+        _paddleRight.LoadContent(Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -70,24 +65,16 @@ public class Pong : Game
 
         _ball.Update(gameTime);
         
-        #region paddle
+        
+
         KeyboardState kbState = Keyboard.GetState();
         if(kbState.IsKeyDown(Keys.Up))
-            _paddleVelocity = new Vector2(0, -_PaddleSpeed);
+            _paddleRight.Direction = new Vector2(0, -1);
         else if(kbState.IsKeyDown(Keys.Down))
-            _paddleVelocity = new Vector2(0, _PaddleSpeed);
+            _paddleRight.Direction = new Vector2(0, 1);
         else
-            _paddleVelocity = Vector2.Zero;
-
-        _paddlePosition += _paddleVelocity * dt;
-
-        // pin the paddle at the to or bottom if it has bled over
-        if(_paddlePosition.Y <= PlayAreaBoundingBox.Top)
-            _paddlePosition.Y = PlayAreaBoundingBox.Top;
-        else if(_paddlePosition.Y + _PaddleHeight >= PlayAreaBoundingBox.Bottom)
-            _paddlePosition.Y = PlayAreaBoundingBox.Bottom - _PaddleHeight;
-
-        #endregion
+            _paddleRight.Direction = Vector2.Zero;
+        _paddleRight.Update(gameTime);
 
         #region paddle - commented out alternative solution - fewer lines of code
         // KeyboardState kbState = Keyboard.GetState();
@@ -130,11 +117,8 @@ public class Pong : Game
         
         _ball.Draw(_spriteBatch);
 
-        
-        Rectangle paddleRectangle = new Rectangle(
-                (int)_paddlePosition.X, (int)_paddlePosition.Y,
-                _PaddleWidth, _PaddleHeight);
-        _spriteBatch.Draw(_paddleTexture, paddleRectangle, Color.White);             
+        _paddleRight.Draw(_spriteBatch);
+                    
         _spriteBatch.End();
 
         base.Draw(gameTime);
