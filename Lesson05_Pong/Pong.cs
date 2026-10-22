@@ -13,8 +13,9 @@ public class Pong : Game
 
     private Texture2D _backgroundTexture;
 
-    private Paddle _paddleRight;
+    private Paddle _paddleRight, _paddleLeft;
     private Ball _ball;
+    // private BlockerStationary _blocker;
 
     private Rectangle PlayAreaBoundingBox
     {
@@ -68,8 +69,12 @@ public class Pong : Game
 
         if(_ball.ProcessCollision(_paddleRight.BoundingBox))
         {
-            ;
+            // _brick.Hide();
         }
+        // if(_ball.ProcessCollision(_brick01.BoundingBox))
+        // {
+        //     // _brick01.InPlay = false;
+        // }
         #region keyboard input
         KeyboardState kbState = Keyboard.GetState();
         if(kbState.IsKeyDown(Keys.Up))
@@ -78,6 +83,8 @@ public class Pong : Game
             _paddleRight.Direction = new Vector2(0, 1);
         else
             _paddleRight.Direction = Vector2.Zero;
+
+        
         #endregion
 
         base.Update(gameTime);
