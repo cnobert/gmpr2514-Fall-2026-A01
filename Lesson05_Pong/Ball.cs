@@ -42,6 +42,7 @@ public class Ball
         {
             _velocity.X *= -1;
         }
+        
         // bounce off top and bottom
         if(_position.Y <= _playAreaBoundingBox.Top ||
             (_position.Y + _WidthAndHeight) >= _playAreaBoundingBox.Bottom)
