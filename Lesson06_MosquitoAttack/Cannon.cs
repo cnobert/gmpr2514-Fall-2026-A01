@@ -8,9 +8,24 @@ public class Cannon
 {
     private SimpleAnimation _animation;
     private Vector2 _position;
-    internal void Initialize(Vector2 position)
+    private float _speed;
+    internal Vector2 Direction {get; set;} = Vector2.Zero;
+    // private Vector2 _direction = Vector2.Zero;
+    // internal Vector2 Direction
+    // {
+    //     get
+    //     {
+    //         return _direction;
+    //     }
+    //     set
+    //     {
+    //         _direction = value;
+    //     }
+    // }
+    internal void Initialize(Vector2 position, float speed)
     {
-        _position = position;    
+        _position = position;  
+        _speed = speed;  
     }
     internal void LoadContent(ContentManager content)
     {
@@ -19,13 +34,19 @@ public class Cannon
     }
     internal void Update(GameTime gameTime)
     {
-        if(_animation != null)
-            _animation.Update(gameTime);
+        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        _position += Direction * _speed * dt;
+        // "?" checks for null before executing the method
+        
+        if(Direction != Vector2.Zero)
+            _animation?.Update(gameTime);
     }
     internal void Draw(SpriteBatch spriteBatch)
     {
-        if(_animation != null)
-            _animation.Draw(spriteBatch, _position, SpriteEffects.None);
+        SpriteEffects effects = SpriteEffects.None;
+        if(Direction.X < 0)
+            effects = SpriteEffects.FlipHorizontally;
+        _animation?.Draw(spriteBatch, _position, effects);
     }
 
 }
