@@ -17,10 +17,16 @@ public class MosquitoAttackGame : Game
     private string _message;
 
     private Cannon _cannon;
+    private Mosquito _mosquito;
 
     private enum GameState {Playing, Paused, Over}
     private GameState _gameState = GameState.Playing;
     private KeyboardState _kbCurrent, _kbPrevious;
+
+    private Rectangle GameBoundingBox
+    {
+        get { return new Rectangle(0, 0, _WindowWidth, _WindowHeight);}
+    }
 
     public MosquitoAttackGame()
     {
@@ -38,6 +44,9 @@ public class MosquitoAttackGame : Game
         _cannon = new Cannon();
         _cannon.Initialize(new Vector2(50, 325), 150);
 
+        _mosquito = new Mosquito();
+        _mosquito.Initialize(new Vector2(100, 50), 150, Vector2.Zero, GameBoundingBox);
+
         base.Initialize();
     }
 
@@ -47,6 +56,7 @@ public class MosquitoAttackGame : Game
         _background = Content.Load<Texture2D>("Background");
         _arial = Content.Load<SpriteFont>("SystemArialFont");
         _cannon.LoadContent(Content);
+        _mosquito.LoadContent(Content);
 
     }
 
@@ -71,6 +81,7 @@ public class MosquitoAttackGame : Game
                 }
                 #endregion
                 _cannon.Update(gameTime);
+                _mosquito.Update(gameTime);
                 break;
             case GameState.Paused:
                 if(Pressed(Keys.P))
@@ -93,11 +104,13 @@ public class MosquitoAttackGame : Game
             case GameState.Playing:        
                _spriteBatch.Draw(_background, Vector2.Zero, Color.White);
                _cannon.Draw(_spriteBatch);
+               _mosquito.Draw(_spriteBatch);
                 break;
             case GameState.Paused:
                 _spriteBatch.Draw(_background, Vector2.Zero, Color.Silver);
                 _spriteBatch.DrawString(_arial, _message, new Vector2(10, 135), Color.White);
                 _cannon.Draw(_spriteBatch);
+                _mosquito.Draw(_spriteBatch);
                 break;
             case GameState.Over:
                 break;
