@@ -17,7 +17,7 @@ public class MosquitoAttackGame : Game
     private string _message;
 
     private Cannon _cannon;
-    private Mosquito _mosquito;
+    private Mosquito[] _mosquitoes;
 
     private enum GameState {Playing, Paused, Over}
     private GameState _gameState = GameState.Playing;
@@ -44,9 +44,12 @@ public class MosquitoAttackGame : Game
         _cannon = new Cannon();
         _cannon.Initialize(new Vector2(50, 325), 150);
 
-        _mosquito = new Mosquito();
-        _mosquito.Initialize(new Vector2(100, 50), 150, Vector2.Zero, GameBoundingBox);
-
+        _mosquitoes = new Mosquito[10];
+        for(int c = 0; c < _mosquitoes.Length; c++)
+        {
+            _mosquitoes[c] = new Mosquito();
+            _mosquitoes[c].Initialize(new Vector2(40 * c, 50), 150, new Vector2(-1, 0), GameBoundingBox);
+        }
         base.Initialize();
     }
 
@@ -56,7 +59,8 @@ public class MosquitoAttackGame : Game
         _background = Content.Load<Texture2D>("Background");
         _arial = Content.Load<SpriteFont>("SystemArialFont");
         _cannon.LoadContent(Content);
-        _mosquito.LoadContent(Content);
+        foreach(Mosquito m in _mosquitoes)
+            m.LoadContent(Content);
 
     }
 
@@ -81,7 +85,8 @@ public class MosquitoAttackGame : Game
                 }
                 #endregion
                 _cannon.Update(gameTime);
-                _mosquito.Update(gameTime);
+                foreach(Mosquito m in _mosquitoes)
+                    m.Update(gameTime);
                 break;
             case GameState.Paused:
                 if(Pressed(Keys.P))
@@ -102,15 +107,17 @@ public class MosquitoAttackGame : Game
         switch(_gameState)
         {
             case GameState.Playing:        
-               _spriteBatch.Draw(_background, Vector2.Zero, Color.White);
-               _cannon.Draw(_spriteBatch);
-               _mosquito.Draw(_spriteBatch);
+                _spriteBatch.Draw(_background, Vector2.Zero, Color.White);
+                _cannon.Draw(_spriteBatch);
+                foreach(Mosquito m in _mosquitoes)
+                    m.Draw(_spriteBatch);
                 break;
             case GameState.Paused:
                 _spriteBatch.Draw(_background, Vector2.Zero, Color.Silver);
                 _spriteBatch.DrawString(_arial, _message, new Vector2(10, 135), Color.White);
                 _cannon.Draw(_spriteBatch);
-                _mosquito.Draw(_spriteBatch);
+                foreach(Mosquito m in _mosquitoes)
+                    m.Draw(_spriteBatch);
                 break;
             case GameState.Over:
                 break;
