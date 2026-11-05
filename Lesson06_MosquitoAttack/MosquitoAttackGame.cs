@@ -52,7 +52,6 @@ public class MosquitoAttackGame : Game
         }
         base.Initialize();
     }
-
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -77,7 +76,10 @@ public class MosquitoAttackGame : Game
                     _cannon.Direction = new Vector2(1, 0);
                 else
                     _cannon.Direction = Vector2.Zero; // new Vector2(0,0)
-                
+
+                if(Pressed(Keys.Space))
+                    _cannon.Shoot();
+
                 if(Pressed(Keys.P))
                 {
                     _gameState = GameState.Paused;

@@ -7,14 +7,12 @@ namespace Lesson06_MosquitoAttack;
 public class CannonBall
 {
     Texture2D _texture;
-    private Vector2 _position;
+    private Vector2 _position, _direction;
     private float _speed;
-    internal Vector2 Direction {get; set;} = Vector2.Zero;
 
     private Rectangle _gameBoundingBox;
-
     private enum State { Flying, NotFlying }
-    private State _state = State.Flying;
+    private State _state = State.NotFlying;
     
     internal Rectangle BoundingBox
     {
@@ -22,8 +20,8 @@ public class CannonBall
     }
     internal void Initialize(float speed, Rectangle gameBoundingBox)
     {
-        _position = new Vector2(40, 400);
-        Direction = new Vector2(0, -1);
+        _position = Vector2.Zero;
+        _direction = Vector2.Zero;
         _speed = speed;
         _gameBoundingBox = gameBoundingBox;
     }
@@ -37,7 +35,7 @@ public class CannonBall
         switch(_state)
         {
             case State.Flying:
-                _position += Direction * _speed * dt;
+                _position += _direction * _speed * dt;
                 break;
             case State.NotFlying:
                 break;
@@ -52,6 +50,16 @@ public class CannonBall
                 break;
             case State.NotFlying:
                 break;
+        }
+    }
+
+    internal void Shoot(Vector2 position, Vector2 direction)
+    {
+        if(_state != State.Flying)
+        {
+            _state = State.Flying;
+            _position = position;
+            _direction = direction;
         }
     }
 }

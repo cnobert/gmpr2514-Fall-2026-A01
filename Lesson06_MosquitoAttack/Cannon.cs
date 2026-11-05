@@ -15,6 +15,15 @@ public class Cannon
 
     private CannonBall _cannonBall;
 
+    private Texture2D _texture;
+    private Rectangle BoundingBox
+    {
+        get 
+        { 
+            return new Rectangle((int)_position.X, (int)_position.Y, _texture.Width / 4, _texture.Height);
+        }
+    }
+
     // private Vector2 _direction = Vector2.Zero;
     // internal Vector2 Direction
     // {
@@ -37,8 +46,8 @@ public class Cannon
     }
     internal void LoadContent(ContentManager content)
     {
-        Texture2D texture = content.Load<Texture2D>("Cannon");
-        _animation = new SimpleAnimation(texture, texture.Width / 4, texture.Height, 4, 2f);
+        _texture = content.Load<Texture2D>("Cannon");
+        _animation = new SimpleAnimation(_texture, _texture.Width / 4, _texture.Height, 4, 2f);
         _cannonBall.LoadContent(content);
     }
     internal void Update(GameTime gameTime)
@@ -61,4 +70,10 @@ public class Cannon
         _cannonBall.Draw(spriteBatch);
     }
 
+    internal void Shoot()
+    {
+        float cbPositionX = BoundingBox.Center.X - _cannonBall.BoundingBox.Width / 2;
+        float cbPositionY = BoundingBox.Top - _cannonBall.BoundingBox.Height;
+        _cannonBall.Shoot(new Vector2(cbPositionX, cbPositionY), new Vector2(0, -1));
+    }
 }
