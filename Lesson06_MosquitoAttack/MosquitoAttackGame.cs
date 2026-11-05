@@ -42,7 +42,7 @@ public class MosquitoAttackGame : Game
         _graphics.ApplyChanges();
         
         _cannon = new Cannon();
-        _cannon.Initialize(new Vector2(50, 325), 150);
+        _cannon.Initialize(new Vector2(50, 325), 150, GameBoundingBox);
 
         _mosquitoes = new Mosquito[10];
         for(int c = 0; c < _mosquitoes.Length; c++)
