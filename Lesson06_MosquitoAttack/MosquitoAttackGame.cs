@@ -101,9 +101,17 @@ public class MosquitoAttackGame : Game
                     _message = "Game Paused, press P to start playing.";
                 }
                 #endregion
+                
+                
                 _cannon.Update(gameTime);
                 foreach(Mosquito m in _mosquitoes)
+                {
                     m.Update(gameTime);
+                    if(m.Alive && _cannon.ProcessCollision(m.BoundingBox))
+                    {
+                        m.Die();
+                    }
+                }
                 break;
             case GameState.Paused:
                 if(Pressed(Keys.P))

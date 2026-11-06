@@ -66,4 +66,9 @@ public class CannonBall
             _direction = direction;
         }
     }
+
+    internal bool ProcessCollision(Rectangle boundingBox)
+    {
+        return _state == State.Flying && BoundingBox.Intersects(boundingBox);
+    }
 }
