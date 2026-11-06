@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Lesson06_MosquitoAttack;
 
@@ -48,8 +49,22 @@ public class MosquitoAttackGame : Game
         for(int c = 0; c < _mosquitoes.Length; c++)
         {
             _mosquitoes[c] = new Mosquito();
-            _mosquitoes[c].Initialize(new Vector2(40 * c, 50), 150, new Vector2(-1, 0), GameBoundingBox);
         }
+        // place the Mosquitoes randomly
+        Random random = new Random();
+        foreach(Mosquito m in _mosquitoes)
+        {
+            int direction = random.Next(1, 3);
+            if(direction == 2)
+                direction = -1;
+            int xPosition = random.Next(1, _WindowWidth - 50);
+            int yPosition = random.Next(1, 151);
+            int speed = random.Next(150, 251);
+            m.Initialize(new Vector2(xPosition, yPosition), speed, new Vector2(direction, 0), GameBoundingBox);
+        }
+
+
+
         base.Initialize();
     }
     protected override void LoadContent()

@@ -13,7 +13,7 @@ public class Cannon
 
     private Rectangle _gameBoundingBox;
 
-    private CannonBall _cannonBall;
+    private CannonBall[] _cBalls;
 
     private Texture2D _texture;
     private Rectangle BoundingBox
@@ -40,15 +40,21 @@ public class Cannon
     {
         _position = position;  
         _speed = speed;  
-        _cannonBall = new CannonBall();
+        _cBalls = new CannonBall[10];
+        for(int c = 0; c < _cBalls.Length; c++)
+        {
+            _cBalls[c] = new CannonBall();
+            _cBalls[c].Initialize(40, gbb);
+        }
+
         _gameBoundingBox = gbb;
-        _cannonBall.Initialize(40, _gameBoundingBox);
     }
     internal void LoadContent(ContentManager content)
     {
         _texture = content.Load<Texture2D>("Cannon");
         _animation = new SimpleAnimation(_texture, _texture.Width / 4, _texture.Height, 4, 2f);
-        _cannonBall.LoadContent(content);
+        foreach(CannonBall c in _cBalls)
+            c.LoadContent(content);
     }
     internal void Update(GameTime gameTime)
     {
@@ -58,7 +64,8 @@ public class Cannon
         if(Direction != Vector2.Zero)
             _animation?.Update(gameTime);
 
-        _cannonBall.Update(gameTime);
+        foreach(CannonBall c in _cBalls)
+            c.Update(gameTime);
     }
     internal void Draw(SpriteBatch spriteBatch)
     {
@@ -67,13 +74,24 @@ public class Cannon
             effects = SpriteEffects.FlipHorizontally;
         _animation?.Draw(spriteBatch, _position, effects);
 
-        _cannonBall.Draw(spriteBatch);
+        foreach(CannonBall c in _cBalls)
+            c.Draw(spriteBatch);
     }
 
     internal void Shoot()
     {
-        float cbPositionX = BoundingBox.Center.X - _cannonBall.BoundingBox.Width / 2;
-        float cbPositionY = BoundingBox.Top - _cannonBall.BoundingBox.Height;
-        _cannonBall.Shoot(new Vector2(cbPositionX, cbPositionY), new Vector2(0, -1));
+        int index = 0;
+        while(index < _cBalls.Length)
+        {
+            if(_cBalls[index].Shootable)
+            {
+                //shoot it
+                float cbPositionX = BoundingBox.Center.X - _cBalls[index].BoundingBox.Width / 2;
+                float cbPositionY = BoundingBox.Top - _cBalls[index].BoundingBox.Height;
+                _cBalls[index].Shoot(new Vector2(cbPositionX, cbPositionY), new Vector2(0, -1));
+                index = _cBalls.Length; //we've shot a Cannon Ball, now exit loop
+            }
+            index++;
+        }
     }
 }

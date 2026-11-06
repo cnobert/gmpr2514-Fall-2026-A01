@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,6 +19,9 @@ public class CannonBall
     {
         get => new Rectangle((int)_position.X, (int)_position.Y, _texture.Width, _texture.Height);
     }
+    
+    internal bool Shootable { get => _state == State.NotFlying; }
+
     internal void Initialize(float speed, Rectangle gameBoundingBox)
     {
         _position = Vector2.Zero;
