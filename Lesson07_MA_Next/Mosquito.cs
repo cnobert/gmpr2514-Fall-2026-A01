@@ -15,8 +15,8 @@ public class Mosquito
     private float _speed;
     private Texture2D _texture;
     private FireBall _fireBall;
-    private const float FireBallSpeed = 180f;
-    private const float ShotsPerSecond = 0.4f;
+    private const float _FireBallSpeed = 180f;
+    private const float _ShotsPerSecond = 0.4f;
     private Rectangle _gameBoundingBox;
 
     private enum State {Alive, Dying, Dead}
@@ -41,7 +41,7 @@ public class Mosquito
         Direction = direction;
         _gameBoundingBox = gameBoundingBox;
         _fireBall = new FireBall();
-        _fireBall.Initialize(FireBallSpeed, gameBoundingBox);
+        _fireBall.Initialize(_FireBallSpeed, gameBoundingBox);
     }
     internal void LoadContent(ContentManager content)
     {
@@ -74,7 +74,7 @@ public class Mosquito
                         BoundingBox.Center.X - _fireBall.BoundingBox.Width / 2f,
                         BoundingBox.Bottom);
 
-                    _fireBall.Shoot(firePosition, Vector2.UnitY);
+                    _fireBall.Shoot(firePosition, new Vector2(0, 1));
                 }
                 break;
             case State.Dying:
