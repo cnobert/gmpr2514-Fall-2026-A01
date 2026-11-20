@@ -4,49 +4,29 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lesson07_MA_Next;
 
-public class Cannon
+public class Cannon : Actor
 {
-    private SimpleAnimation _animationAlive, _animationDying;
     private const float _DyingDuration = 1f;
-    private float _dyingTimer = 0;
-    private enum State {Alive, Dying, Dead}
-    private State _state = State.Alive;
-
-    internal bool Alive { get => _state == State.Alive; }
-    private Vector2 _position;
-    private float _speed;
-    internal Vector2 Direction {get; set;} = Vector2.Zero;
-
-    private Rectangle _gameBoundingBox;
 
     private CannonBall[] _cBalls;
 
-    private Texture2D _texture;
-    internal Rectangle BoundingBox
+    internal override void Initialize(Vector2 position, float speed, Rectangle gbb)
     {
-        get 
-        { 
-            return new Rectangle((int)_position.X, (int)_position.Y, _texture.Width / 4, _texture.Height);
-        }
-    }
+        base.Initialize(position, speed, gbb);
 
-    internal void Initialize(Vector2 position, float speed, Rectangle gbb)
-    {
-        _position = position;  
-        _speed = speed;  
         _cBalls = new CannonBall[10];
         for(int c = 0; c < _cBalls.Length; c++)
         {
             _cBalls[c] = new CannonBall();
-            _cBalls[c].Initialize(40, gbb);
+            _cBalls[c].Initialize(200, gbb);
         }
-
-        _gameBoundingBox = gbb;
     }
     internal void LoadContent(ContentManager content)
     {
         _texture = content.Load<Texture2D>("Cannon");
-        _animationAlive = new SimpleAnimation(_texture, _texture.Width / 4, _texture.Height, 4, 2f);
+        _dimensions = new Vector2(_texture.Width / 4, _texture.Height);
+        _animationAlive = new SimpleAnimation(_texture, (int)_dimensions.X, (int)_dimensions.Y, 4, 2f);
+        
         Texture2D dyingTexture = content.Load<Texture2D>("Poof");
         int frameWidth = 16;
         int frameHeight = dyingTexture.Height;

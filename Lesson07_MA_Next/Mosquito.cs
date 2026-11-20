@@ -8,9 +8,12 @@ namespace Lesson07_MA_Next;
 public class Mosquito
 {
     private const float _DyingDuration = 1f;
-    private float _dyingTimer = 0;
-
+    
     private SimpleAnimation _animationAlive, _animationDying;
+    private float _dyingTimer = 0;
+    private enum State {Alive, Dying, Dead}
+    private State _state = State.Alive;
+    
     private Vector2 _position;
     private float _speed;
     private Texture2D _texture;
@@ -18,9 +21,6 @@ public class Mosquito
     private const float _FireBallSpeed = 180f;
     private const float _ShotsPerSecond = 0.4f;
     private Rectangle _gameBoundingBox;
-
-    private enum State {Alive, Dying, Dead}
-    private State _state = State.Alive;
 
     internal bool Alive { get => _state == State.Alive;}
 
@@ -38,8 +38,9 @@ public class Mosquito
     {
         _position = position;
         _speed = speed;
-        Direction = direction;
         _gameBoundingBox = gameBoundingBox;
+        Direction = direction;
+        
         _fireBall = new FireBall();
         _fireBall.Initialize(_FireBallSpeed, gameBoundingBox);
     }

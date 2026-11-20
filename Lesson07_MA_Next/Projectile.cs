@@ -16,7 +16,8 @@ public abstract class Projectile
 
     internal Rectangle BoundingBox
     {
-        get => new Rectangle((int)_position.X, (int)_position.Y, (int)_dimensions.X, (int)_dimensions.Y);
+        get =>  new Rectangle((int)_position.X, (int)_position.Y, 
+                (int)_dimensions.X, (int)_dimensions.Y);
     }
     internal bool Shootable { get => _state == State.NotFlying; }
 
